@@ -54,4 +54,81 @@ export function sendContactMessage({ name, email, message }) {
   });
 }
 
+// =============================================
+// SALON API
+// =============================================
+
+export function fetchSalonServices() {
+  return request("/salon/services");
+}
+
+export function fetchSalonTeam() {
+  return request("/salon/team");
+}
+
+export function fetchSalonGallery(category = null) {
+  const query = category ? `?category=${category}` : "";
+  return request(`/salon/gallery${query}`);
+}
+
+export function fetchSalonReviews() {
+  return request("/salon/reviews");
+}
+
+export function fetchSalonStats() {
+  return request("/salon/stats");
+}
+
+export function createSalonBooking(data) {
+  return request("/salon/bookings", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function submitSalonReview(data) {
+  return request("/salon/reviews", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+// =============================================
+// HOMECARE API
+// =============================================
+
+export function fetchHomecareServices() {
+  return request("/homecare/services");
+}
+
+export function fetchHomecareCaregivers() {
+  return request("/homecare/caregivers");
+}
+
+export function fetchHomecareTestimonials() {
+  return request("/homecare/testimonials");
+}
+
+export function fetchHomecareStats() {
+  return request("/homecare/stats");
+}
+
+export function fetchHomecareFeatures() {
+  return request("/homecare/features");
+}
+
+export function createHomecareConsultation(data) {
+  return request("/homecare/consultations", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function submitHomecareTestimonial(data) {
+  return request("/homecare/testimonials", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
 

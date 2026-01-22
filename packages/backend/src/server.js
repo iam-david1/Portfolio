@@ -8,6 +8,8 @@ import productsRouter from "./routes/products.js";
 import cartRouter from "./routes/cart.js";
 import ordersRouter from "./routes/orders.js";
 import contactRouter from "./routes/contact.js";
+import salonRouter from "./routes/salon.js";
+import homecareRouter from "./routes/homecare.js";
 
 dotenv.config();
 
@@ -32,6 +34,8 @@ app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/salon", salonRouter);
+app.use("/api/homecare", homecareRouter);
 
 // Generic error handler
 app.use((err, _req, res, _next) => {

@@ -1,16 +1,37 @@
 {
-  "name": "shophub-monorepo",
-  "private": true,
+  "name": "fullstack-portfolio-monorepo",
   "version": "1.0.0",
-  "description": "Monorepo for ShopHub e-commerce demo (Node.js backend, React frontend, SQLite).",
+  "description": "A collection of full-stack web applications showcasing modern development practices. Features e-commerce, salon booking, and homecare platforms.",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev:backend": "pnpm --filter @shophub/backend dev",
-    "dev:frontend": "pnpm --filter @shophub/frontend dev",
-    "dev": "pnpm --filter @shophub/backend dev & pnpm --filter @shophub/frontend dev"
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd packages/backend && npm run dev",
+    "dev:frontend": "cd packages/frontend && npm run dev",
+    "build": "cd packages/frontend && npm run build",
+    "start": "cd packages/backend && npm run start",
+    "migrate": "cd packages/backend && npm run migrate",
+    "preview": "cd packages/frontend && npm run preview",
+    "install:all": "npm install && cd packages/backend && npm install && cd ../frontend && npm install"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "keywords": [
+    "monorepo",
+    "fullstack",
+    "react",
+    "nodejs",
+    "express",
+    "sqlite",
+    "portfolio",
+    "ecommerce",
+    "salon",
+    "homecare"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
-
-
