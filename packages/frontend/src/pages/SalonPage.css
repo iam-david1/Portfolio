@@ -21,26 +21,27 @@
   overflow-x: hidden;
 }
 
-/* Back Button */
+/* Back Button - Faint/Transparent */
 .back-button {
   position: fixed;
   top: 1rem;
   left: 1rem;
   z-index: 10000;
-  background: rgba(0, 0, 0, 0.9);
-  padding: 0.75rem 1.25rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.6rem 1.2rem;
   border-radius: 50px;
-  border: 1px solid var(--salon-gray);
-  color: var(--salon-gold);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(212, 175, 55, 0.6);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
 .back-button:hover {
-  border-color: var(--salon-gold);
-  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--salon-gold);
 }
 
 /* Navigation */
@@ -191,23 +192,25 @@
 }
 
 .btn-primary {
-  background: var(--salon-gradient);
-  color: var(--salon-black);
-  border: none;
+  background: var(--salon-dark);
+  color: var(--salon-gold);
+  border: 2px solid var(--salon-gold);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+  background: var(--salon-gray);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.2);
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--salon-text);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: var(--salon-black);
+  color: var(--salon-text-muted);
+  border: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .btn-secondary:hover {
-  border-color: var(--salon-gold);
+  background: var(--salon-dark);
+  border-color: rgba(212, 175, 55, 0.5);
   color: var(--salon-gold);
 }
 
@@ -216,20 +219,20 @@
   justify-content: center;
 }
 
-/* Hero Stats */
+/* Hero Stats - Compact */
 .hero-stats {
   position: absolute;
-  bottom: 3rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   display: flex;
-  gap: 3rem;
-  background: rgba(10, 10, 10, 0.9);
-  padding: 2rem 3rem;
-  border-radius: 20px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  backdrop-filter: blur(20px);
+  gap: 1.5rem;
+  background: rgba(10, 10, 10, 0.85);
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(10px);
 }
 
 .stat-item {
@@ -238,17 +241,18 @@
 
 .stat-value {
   display: block;
-  font-size: 2.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--salon-gold);
   font-family: "Playfair Display", serif;
+  line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 0.85rem;
+  font-size: 0.55rem;
   color: var(--salon-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 
 /* Sections */
@@ -957,7 +961,7 @@
   .hero-stats {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
   }
 }
 
@@ -974,7 +978,9 @@
     position: relative;
     bottom: auto;
     transform: none;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
+    gap: 0.75rem;
+    padding: 0.5rem 0.8rem;
   }
 
   .services-grid,

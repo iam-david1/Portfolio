@@ -31,28 +31,32 @@ function seedProducts(db) {
       name: "Wireless Headphones",
       price: 99.99,
       image:
-        "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop&auto=format",
+      description: "Premium wireless headphones with noise cancellation and 30-hour battery life.",
     },
     {
       id: 2,
       name: "Smart Watch",
       price: 249.99,
       image:
-        "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop&auto=format",
+      description: "Advanced smartwatch with health tracking, GPS, and always-on display.",
     },
     {
       id: 3,
       name: "Laptop Stand",
       price: 49.99,
       image:
-        "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1596347909571-2f249cfdbb0a?w=900&auto=format&fit=crop&q=60",
+      description: "Ergonomic aluminum laptop stand for better posture and cooling.",
     },
     {
       id: 4,
       name: "Mechanical Keyboard",
       price: 129.99,
       image:
-        "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=400&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&h=400&fit=crop&auto=format",
+      description: "RGB mechanical keyboard with Cherry MX switches and programmable keys.",
     },
     {
       id: 5,
@@ -60,27 +64,31 @@ function seedProducts(db) {
       price: 59.99,
       image:
         "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop&auto=format",
+      description: "Ergonomic wireless mouse with precision tracking and long battery life.",
     },
     {
       id: 6,
       name: "USB-C Hub",
       price: 79.99,
       image:
-        "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=400&fit=crop&auto=format",
+        "https://plus.unsplash.com/premium_photo-1759495106759-c709f52a5f23?w=900&auto=format&fit=crop&q=60",
+      description: "7-in-1 USB-C hub with HDMI, USB 3.0 ports, and SD card reader.",
     },
     {
       id: 7,
-      name: "LED Monitor",
+      name: "4K Monitor",
       price: 299.99,
       image:
-        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=400&h=400&fit=crop&auto=format",
+      description: "27-inch 4K UHD monitor with HDR support and ultra-thin bezels.",
     },
     {
       id: 8,
-      name: "Webcam HD",
+      name: "HD Webcam",
       price: 89.99,
       image:
-        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop&auto=format",
+        "https://images.unsplash.com/photo-1623949556303-b0d17d198863?w=900&auto=format&fit=crop&q=60",
+      description: "1080p HD webcam with auto-focus, built-in mic, and privacy cover.",
     },
   ];
 
