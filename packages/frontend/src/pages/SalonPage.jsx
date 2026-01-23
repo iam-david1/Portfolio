@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  fetchSalonServices,
-  fetchSalonTeam,
-  fetchSalonGallery,
-  fetchSalonReviews,
-  fetchSalonStats,
-  createSalonBooking,
-} from "../api.js";
+  mockSalonServices,
+  mockSalonTeam,
+  mockSalonGallery,
+  mockSalonReviews,
+  mockSalonStats,
+} from "../mockData.js";
 import "./SalonPage.css";
 
 // Animation variants
@@ -247,29 +246,16 @@ export default function SalonPage() {
   const [bookingStatus, setBookingStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function loadData() {
+  function loadData() {
     setLoading(true);
     setError(null);
-    try {
-      const [servicesData, teamData, galleryData, reviewsData, statsData] =
-        await Promise.all([
-          fetchSalonServices(),
-          fetchSalonTeam(),
-          fetchSalonGallery(),
-          fetchSalonReviews(),
-          fetchSalonStats(),
-        ]);
-      setServices(servicesData);
-      setTeam(teamData);
-      setGallery(galleryData);
-      setReviews(reviewsData);
-      setStats(statsData);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to load salon data. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    // Use mock data for demo mode
+    setServices(mockSalonServices);
+    setTeam(mockSalonTeam);
+    setGallery(mockSalonGallery);
+    setReviews(mockSalonReviews);
+    setStats(mockSalonStats);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -295,14 +281,17 @@ export default function SalonPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  async function handleBookingSubmit(e) {
+  function handleBookingSubmit(e) {
     e.preventDefault();
     setIsSubmitting(true);
     setBookingStatus(null);
 
-    try {
-      const result = await createSalonBooking(bookingForm);
-      setBookingStatus({ type: "success", message: result.message });
+    // Demo mode - simulate booking submission
+    setTimeout(() => {
+      setBookingStatus({
+        type: "success",
+        message: "Demo: Booking request received! (This is a demo - no actual booking was made)"
+      });
       setBookingForm({
         name: "",
         email: "",
@@ -313,11 +302,8 @@ export default function SalonPage() {
         time: "",
         notes: "",
       });
-    } catch (err) {
-      setBookingStatus({ type: "error", message: "Failed to create booking. Please try again." });
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 1000);
   }
 
   const scrollToSection = (id) => {

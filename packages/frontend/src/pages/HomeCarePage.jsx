@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  fetchHomecareServices,
-  fetchHomecareCaregivers,
-  fetchHomecareTestimonials,
-  fetchHomecareStats,
-  fetchHomecareFeatures,
-  createHomecareConsultation,
-} from "../api.js";
+  mockHomecareServices,
+  mockHomecareCaregivers,
+  mockHomecareTestimonials,
+  mockHomecareStats,
+  mockHomecareFeatures,
+} from "../mockData.js";
 import "./HomeCarePage.css";
 
 // Animation variants
@@ -250,29 +249,16 @@ export default function HomeCarePage() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function loadData() {
+  function loadData() {
     setLoading(true);
     setError(null);
-    try {
-      const [servicesData, caregiversData, testimonialsData, statsData, featuresData] =
-        await Promise.all([
-          fetchHomecareServices(),
-          fetchHomecareCaregivers(),
-          fetchHomecareTestimonials(),
-          fetchHomecareStats(),
-          fetchHomecareFeatures(),
-        ]);
-      setServices(servicesData);
-      setCaregivers(caregiversData);
-      setTestimonials(testimonialsData);
-      setStats(statsData);
-      setFeatures(featuresData);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to load homecare data. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    // Use mock data for demo mode
+    setServices(mockHomecareServices);
+    setCaregivers(mockHomecareCaregivers);
+    setTestimonials(mockHomecareTestimonials);
+    setStats(mockHomecareStats);
+    setFeatures(mockHomecareFeatures);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -298,14 +284,17 @@ export default function HomeCarePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  async function handleConsultSubmit(e) {
+  function handleConsultSubmit(e) {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    try {
-      const result = await createHomecareConsultation(consultForm);
-      setSubmitStatus({ type: "success", message: result.message });
+    // Demo mode - simulate form submission
+    setTimeout(() => {
+      setSubmitStatus({
+        type: "success",
+        message: "Demo: Consultation request received! (This is a demo - no actual request was submitted)"
+      });
       setConsultForm({
         name: "",
         email: "",
@@ -314,11 +303,8 @@ export default function HomeCarePage() {
         message: "",
         preferred_date: "",
       });
-    } catch (err) {
-      setSubmitStatus({ type: "error", message: "Failed to submit request. Please try again." });
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 1000);
   }
 
   const scrollToSection = (id) => {

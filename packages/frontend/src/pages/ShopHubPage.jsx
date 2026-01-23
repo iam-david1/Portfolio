@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { CartContext } from "../cartContext.js";
-import { fetchProducts, fetchCart, addToCart, updateCartItem, removeCartItem, checkout, sendContactMessage } from "../api.js";
+import { mockProducts } from "../mockData.js";
 import { Link } from "react-router-dom";
 import "../styles.css";
 
-const SESSION_KEY = "shophub_session_id";
+// Demo mode - uses local storage cart instead of backend API
+const CART_STORAGE_KEY = "shophub_demo_cart";
 
 // Animation variants
 const fadeInUp = {
@@ -30,15 +31,6 @@ const scaleIn = {
   hidden: { opacity: 0, scale: 0.9, y: 20 },
   visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
-
-function getOrCreateSessionId() {
-  let id = window.localStorage.getItem(SESSION_KEY);
-  if (!id) {
-    id = `sess_${Math.random().toString(36).slice(2)}_${Date.now()}`;
-    window.localStorage.setItem(SESSION_KEY, id);
-  }
-  return id;
-}
 
 // Floating Particles Background
 function FloatingParticles() {
@@ -942,6 +934,21 @@ function Footer() {
   );
 }
 
+// Helper to load cart from localStorage
+function loadCartFromStorage() {
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+// Helper to save cart to localStorage
+function saveCartToStorage(cart) {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+}
+
 export default function ShopHubPage() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -949,25 +956,20 @@ export default function ShopHubPage() {
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(null);
 
-  const sessionId = useMemo(() => getOrCreateSessionId(), []);
-
   useEffect(() => {
-    async function load() {
-      try {
-        const [prod, cart] = await Promise.all([
-          fetchProducts(),
-          fetchCart(sessionId),
-        ]);
-        setProducts(prod);
-        setCartItems(cart);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+    // Load products from mock data
+    setProducts(mockProducts);
+    // Load cart from localStorage
+    setCartItems(loadCartFromStorage());
+    setLoading(false);
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    if (!loading) {
+      saveCartToStorage(cartItems);
     }
-    load();
-  }, [sessionId]);
+  }, [cartItems, loading]);
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotal = cartItems.reduce(
@@ -980,66 +982,62 @@ export default function ShopHubPage() {
     setTimeout(() => setNotification(null), 3000);
   }
 
-  async function handleAddToCart(productId) {
-    try {
-      const product = products.find((p) => p.id === productId);
-      await addToCart(sessionId, productId, 1);
-      const updatedCart = await fetchCart(sessionId);
-      setCartItems(updatedCart);
-      showNotification(`${product.name} added to cart!`);
-    } catch (err) {
-      console.error(err);
-      showNotification("Failed to add item to cart.");
-    }
+  function handleAddToCart(productId) {
+    const product = products.find((p) => p.id === productId);
+    if (!product) return;
+
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.productId === productId);
+      if (existing) {
+        return prev.map((item) =>
+          item.productId === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [
+        ...prev,
+        {
+          id: Date.now(),
+          productId: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: 1,
+        },
+      ];
+    });
+    showNotification(`${product.name} added to cart!`);
   }
 
-  async function handleUpdateQuantity(cartItemId, newQuantity) {
-    try {
-      await updateCartItem(sessionId, cartItemId, newQuantity);
-      const updatedCart = await fetchCart(sessionId);
-      setCartItems(updatedCart);
-    } catch (err) {
-      console.error(err);
-      showNotification("Failed to update cart.");
-    }
+  function handleUpdateQuantity(cartItemId, newQuantity) {
+    if (newQuantity < 1) return;
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === cartItemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
   }
 
-  async function handleRemoveItem(cartItemId) {
-    try {
-      await removeCartItem(sessionId, cartItemId);
-      const updatedCart = await fetchCart(sessionId);
-      setCartItems(updatedCart);
-    } catch (err) {
-      console.error(err);
-      showNotification("Failed to remove item.");
-    }
+  function handleRemoveItem(cartItemId) {
+    setCartItems((prev) => prev.filter((item) => item.id !== cartItemId));
+    showNotification("Item removed from cart.");
   }
 
-  async function handleCheckout() {
+  function handleCheckout() {
     if (cartItems.length === 0) {
       showNotification("Your cart is empty!");
       return;
     }
-    try {
-      const { total } = await checkout(sessionId);
-      showNotification(`Order placed! Total: $${total.toFixed(2)}`);
-      const updatedCart = await fetchCart(sessionId);
-      setCartItems(updatedCart);
-      setIsCartOpen(false);
-    } catch (err) {
-      console.error(err);
-      showNotification("Checkout failed.");
-    }
+    const total = cartTotal;
+    setCartItems([]);
+    setIsCartOpen(false);
+    showNotification(`Demo: Order placed! Total: $${total.toFixed(2)}`);
   }
 
-  async function handleContactSubmit({ name, email, message }) {
-    try {
-      await sendContactMessage({ name, email, message });
-      showNotification("Message sent successfully!");
-    } catch (err) {
-      console.error(err);
-      showNotification("Failed to send message.");
-    }
+  function handleContactSubmit({ name, email, message }) {
+    // Demo mode - just show success message
+    showNotification("Demo: Message received! (Not actually sent)");
   }
 
   const cartContextValue = {
