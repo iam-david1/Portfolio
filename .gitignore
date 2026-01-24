@@ -32,9 +32,10 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Lock files (use pnpm-lock.yaml from repo)
-package-lock.json
+# Lock files
 yarn.lock
+# Allow package-lock.json in frontend for Vercel deployment
+!/packages/frontend/package-lock.json
 
 # Temporary files
 tmp/
