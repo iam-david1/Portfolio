@@ -22,7 +22,6 @@ A personal portfolio showcasing **three full-stack web applications** built with
 ### CareComfort HomeCare
 ![HomeCare](screenshots/homecare.png)
 
-> *Screenshots coming soon*
 
 ---
 
