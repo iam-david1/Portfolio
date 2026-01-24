@@ -1,19 +1,44 @@
-// Products Data
-const products = [
-    { id: 1, name: "Wireless Headphones", price: 99.99, image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop&auto=format" },
-    { id: 2, name: "Smart Watch", price: 249.99, image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop&auto=format" },
-    { id: 3, name: "Laptop Stand", price: 49.99, image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop&auto=format" },
-    { id: 4, name: "Mechanical Keyboard", price: 129.99, image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=400&fit=crop&auto=format" },
-    { id: 5, name: "Wireless Mouse", price: 59.99, image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop&auto=format" },
-    { id: 6, name: "USB-C Hub", price: 79.99, image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=400&fit=crop&auto=format" },
-    { id: 7, name: "LED Monitor", price: 299.99, image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop&auto=format" },
-    { id: 8, name: "Webcam HD", price: 89.99,image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop&auto=format" }
-];
+// API Configuration
+const API_BASE = 'http://localhost:4000/api';
 
+let products = [];
 let cart = [];
 
-// Load Products
-function loadProducts() {
+// Fetch Products from API
+async function loadProducts() {
+    const productsGrid = document.getElementById('productsGrid');
+
+    // Show loading skeletons
+    productsGrid.innerHTML = Array(8).fill(0).map(() => `
+        <div class="product-card">
+            <div class="product-image skeleton" style="height: 280px;"></div>
+            <div class="product-info">
+                <div class="skeleton" style="height: 24px; width: 70%; margin-bottom: 0.5rem;"></div>
+                <div class="skeleton" style="height: 20px; width: 90%; margin-bottom: 0.75rem;"></div>
+                <div class="skeleton" style="height: 32px; width: 40%; margin-bottom: 1rem;"></div>
+                <div class="skeleton" style="height: 44px; width: 100%; border-radius: 8px;"></div>
+            </div>
+        </div>
+    `).join('');
+
+    try {
+        const response = await fetch(`${API_BASE}/products`);
+        if (!response.ok) throw new Error('Failed to fetch products');
+        products = await response.json();
+        renderProducts();
+    } catch (error) {
+        console.error('Error loading products:', error);
+        productsGrid.innerHTML = `
+            <div class="error-container" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                <p style="color: #ff4444; margin-bottom: 1rem;">Failed to load products</p>
+                <button class="add-to-cart" onclick="loadProducts()">Try Again</button>
+            </div>
+        `;
+    }
+}
+
+// Render Products
+function renderProducts() {
     const productsGrid = document.getElementById('productsGrid');
     productsGrid.innerHTML = products.map(product => `
         <div class="product-card">
@@ -22,7 +47,8 @@ function loadProducts() {
             </div>
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
-                <div class="product-price">$${product.price.toFixed(2)}</div>
+                ${product.description ? `<p class="product-description">${product.description}</p>` : ''}
+                <div class="product-price">$${Number(product.price).toFixed(2)}</div>
                 <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
             </div>
         </div>
@@ -32,14 +58,16 @@ function loadProducts() {
 // Add to Cart
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
+    if (!product) return;
+
     const existingItem = cart.find(item => item.id === productId);
-    
+
     if (existingItem) {
         existingItem.quantity++;
     } else {
         cart.push({ ...product, quantity: 1 });
     }
-    
+
     updateCart();
     showNotification(`${product.name} added to cart!`);
 }
@@ -68,12 +96,12 @@ function updateCart() {
     const cartItems = document.getElementById('cartItems');
     const cartCount = document.getElementById('cartCount');
     const cartTotal = document.getElementById('cartTotal');
-    
+
     cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
+
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     cartTotal.textContent = total.toFixed(2);
-    
+
     if (cart.length === 0) {
         cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
     } else {
@@ -84,7 +112,7 @@ function updateCart() {
                 </div>
                 <div class="cart-item-info">
                     <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                    <div class="cart-item-price">$${Number(item.price).toFixed(2)}</div>
                     <div class="cart-item-controls">
                         <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
                         <span>${item.quantity}</span>
@@ -112,7 +140,7 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
         alert('Your cart is empty!');
         return;
     }
-    
+
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     alert(`Thank you for your purchase!\nTotal: $${total.toFixed(2)}\n\n(This is a demo - no payment will be processed)`);
     cart = [];
@@ -121,9 +149,32 @@ document.getElementById('checkoutBtn').addEventListener('click', () => {
 });
 
 // Contact Form
-document.getElementById('contactForm').addEventListener('submit', (e) => {
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
+
+    const formData = {
+        name: e.target.querySelector('input[type="text"]').value,
+        email: e.target.querySelector('input[type="email"]').value,
+        message: e.target.querySelector('textarea').value,
+    };
+
+    try {
+        const response = await fetch(`${API_BASE}/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            showNotification('Message sent successfully!');
+        } else {
+            showNotification('Failed to send message.');
+        }
+    } catch (error) {
+        console.error('Error sending message:', error);
+        showNotification('Failed to send message.');
+    }
+
     e.target.reset();
 });
 
@@ -134,18 +185,20 @@ function showNotification(message) {
         position: fixed;
         top: 100px;
         right: 20px;
-        background: #00D4FF;
+        background: linear-gradient(135deg, #00D4FF, #00b8e6);
         color: #000;
         padding: 1rem 2rem;
-        border-radius: 8px;
+        border-radius: 12px;
         z-index: 10000;
-        animation: slideIn 0.3s;
+        font-weight: 600;
+        box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        animation: slideIn 0.3s ease;
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s';
+        notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 2000);
 }
@@ -154,9 +207,9 @@ function showNotification(message) {
 document.addEventListener('click', (e) => {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartBtn = document.getElementById('cartBtn');
-    
-    if (cartSidebar.classList.contains('open') && 
-        !cartSidebar.contains(e.target) && 
+
+    if (cartSidebar.classList.contains('open') &&
+        !cartSidebar.contains(e.target) &&
         !cartBtn.contains(e.target)) {
         cartSidebar.classList.remove('open');
     }
@@ -176,5 +229,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
-
