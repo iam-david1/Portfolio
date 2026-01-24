@@ -405,7 +405,9 @@ export default function HomePage() {
               GitHub
             </motion.a>
             <motion.a
-              href="#"
+              href="https://www.linkedin.com/in/david-omwenyeke-4054b038a/"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
               style={{
@@ -632,7 +634,7 @@ export default function HomePage() {
               GitHub
             </a>
             <span style={{ color: "#333" }}>|</span>
-            <a href="#" style={{ color: "#888", textDecoration: "none" }}>
+            <a href="https://www.linkedin.com/in/david-omwenyeke-4054b038a/" target="_blank" rel="noopener noreferrer" style={{ color: "#888", textDecoration: "none" }}>
               LinkedIn
             </a>
             <span style={{ color: "#333" }}>|</span>
