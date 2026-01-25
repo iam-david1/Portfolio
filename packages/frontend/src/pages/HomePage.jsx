@@ -449,8 +449,8 @@ export default function HomePage() {
               Contact Me
             </motion.a>
             <motion.a
-              href="/resume.pdf"
-              download
+              href="/resume.html"
+              target="_blank"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
               style={{

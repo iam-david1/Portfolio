@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David Omwenyeke - Resume</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+      background: #fff;
+    }
+
+    @media print {
+      body {
+        padding: 20px;
+      }
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #00d4ff;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .title {
+      font-size: 1.2rem;
+      color: #00d4ff;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .contact-info a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    .contact-info a:hover {
+      color: #00d4ff;
+    }
+
+    section {
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      color: #1a1a1a;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .summary {
+      color: #555;
+      font-size: 1rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .skill-category h3 {
+      font-size: 0.9rem;
+      color: #00d4ff;
+      margin-bottom: 5px;
+    }
+
+    .skill-category ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .skill-category li {
+      margin-bottom: 3px;
+    }
+
+    .project {
+      margin-bottom: 20px;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+
+    .project h3 {
+      font-size: 1.1rem;
+      color: #1a1a1a;
+    }
+
+    .project-date {
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .project-tech {
+      font-size: 0.85rem;
+      color: #00d4ff;
+      margin-bottom: 5px;
+    }
+
+    .project p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .project ul {
+      font-size: 0.9rem;
+      color: #555;
+      margin-left: 20px;
+      margin-top: 5px;
+    }
+
+    .education-item {
+      margin-bottom: 10px;
+    }
+
+    .education-item h3 {
+      font-size: 1rem;
+      color: #1a1a1a;
+    }
+
+    .education-item p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #00d4ff, #00ff88);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media print {
+      .print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>David Omwenyeke</h1>
+    <div class="title">Full-Stack Developer</div>
+    <div class="contact-info">
+      <span>Edinburgh, Scotland, UK</span>
+      <span>|</span>
+      <a href="tel:+447376580030">+44 7376 580030</a>
+      <span>|</span>
+      <a href="mailto:omwenyekedavid07@gmail.com">omwenyekedavid07@gmail.com</a>
+      <span>|</span>
+      <a href="https://github.com/iam-david1" target="_blank">GitHub</a>
+      <span>|</span>
+      <a href="https://www.linkedin.com/in/david-omwenyeke-4054b038a/" target="_blank">LinkedIn</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p class="summary">
+      Self-taught Full-Stack Developer with hands-on experience building modern web applications using React, Node.js, and SQL databases. Passionate about creating responsive, user-friendly interfaces with clean code and great user experiences. Experienced in delivering freelance projects and eager to contribute to a dynamic development team.
+    </p>
+  </section>
+
+  <section>
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Frontend</h3>
+        <ul>
+          <li>React 18</li>
+          <li>JavaScript (ES6+)</li>
+          <li>HTML5 / CSS3</li>
+          <li>Framer Motion</li>
+          <li>Responsive Design</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Backend</h3>
+        <ul>
+          <li>Node.js</li>
+          <li>Express.js</li>
+          <li>REST APIs</li>
+          <li>SQLite / SQL</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Tools</h3>
+        <ul>
+          <li>Git / GitHub</li>
+          <li>Vite</li>
+          <li>npm / pnpm</li>
+          <li>VS Code</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+
+    <div class="project">
+      <div class="project-header">
+        <h3>Full-Stack Portfolio</h3>
+        <span class="project-date">2024</span>
+      </div>
+      <div class="project-tech">React, Node.js, Express, SQLite, Framer Motion</div>
+      <p>A comprehensive portfolio showcasing three full-stack web applications:</p>
+      <ul>
+        <li><strong>ShopHub E-Commerce:</strong> Online store with product catalog, shopping cart, and checkout functionality</li>
+        <li><strong>Elite Salon:</strong> Booking platform with service listings, team profiles, and appointment scheduling</li>
+        <li><strong>CareComfort HomeCare:</strong> Healthcare agency site with caregiver profiles and consultation requests</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <h3>Cleaning Services Website</h3>
+        <span class="project-date">2024</span>
+      </div>
+      <div class="project-tech">Freelance Project</div>
+      <p>Designed and developed a professional website for a cleaning business, featuring service listings, booking functionality, and responsive design optimized for mobile users.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="education-item">
+      <h3>Self-Taught Developer</h3>
+      <p>Completed extensive online coursework and hands-on projects in web development, focusing on modern JavaScript frameworks and full-stack technologies.</p>
+    </div>
+  </section>
+
+  <button class="print-btn" onclick="window.print()">Download PDF</button>
+</body>
+</html>
