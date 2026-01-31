@@ -1,7 +1,7 @@
 services:
   # Backend API
   - type: web
-    name: shophub-api
+    name: david-portfolio-api
     runtime: node
     rootDir: packages/backend
     buildCommand: npm install
@@ -10,18 +10,18 @@ services:
       - key: NODE_ENV
         value: production
       - key: ALLOWED_ORIGINS
-        value: https://shophub-frontend.onrender.com
+        value: https://david-portfolio.onrender.com
 
   # Frontend
   - type: web
-    name: shophub-frontend
+    name: david-portfolio
     runtime: static
     rootDir: packages/frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
       - key: VITE_API_BASE
-        value: https://shophub-api.onrender.com/api
+        value: https://david-portfolio-api.onrender.com/api
     headers:
       - path: /*
         name: Cache-Control
