@@ -1,31 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import "../styles.css";
-
-// Theme configurations
-const themes = {
-  dark: {
-    bg: "#000",
-    bgSecondary: "#0a0a0a",
-    bgCard: "linear-gradient(135deg, #111111 0%, #0a0a0a 100%)",
-    text: "#ffffff",
-    textSecondary: "#888",
-    textMuted: "#666",
-    border: "#1f1f1f",
-    skillBg: "#1a1a1a",
-  },
-  light: {
-    bg: "#ffffff",
-    bgSecondary: "#f5f5f5",
-    bgCard: "linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)",
-    text: "#1a1a1a",
-    textSecondary: "#555",
-    textMuted: "#888",
-    border: "#e0e0e0",
-    skillBg: "#e5e5e5",
-  },
-};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -211,61 +187,15 @@ function ProjectCard({ project }) {
   );
 }
 
-// Theme Toggle Button Component
-function ThemeToggle({ isDark, toggle }) {
-  return (
-    <motion.button
-      onClick={toggle}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-      style={{
-        position: "fixed",
-        top: "20px",
-        right: "20px",
-        zIndex: 1000,
-        width: "50px",
-        height: "50px",
-        borderRadius: "50%",
-        border: "none",
-        background: isDark ? "#1a1a1a" : "#f0f0f0",
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "1.5rem",
-        boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
-      }}
-      aria-label="Toggle theme"
-    >
-      {isDark ? "☀️" : "🌙"}
-    </motion.button>
-  );
-}
-
 export default function HomePage() {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem("theme");
-    return saved ? saved === "dark" : true;
-  });
-
-  const theme = isDark ? themes.dark : themes.light;
-
-  useEffect(() => {
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
-
-  const toggleTheme = () => setIsDark(!isDark);
-
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: theme.bg,
-        color: theme.text,
-        transition: "background 0.3s, color 0.3s",
+        background: "#000",
+        color: "#fff",
       }}
     >
-      <ThemeToggle isDark={isDark} toggle={toggleTheme} />
       {/* Hero Section - Personal Intro */}
       <section
         style={{
@@ -282,10 +212,7 @@ export default function HomePage() {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: isDark
-            ? "radial-gradient(ellipse at top, #0a1628 0%, #000000 60%)"
-            : "radial-gradient(ellipse at top, #e8f4fc 0%, #ffffff 60%)",
-          transition: "background 0.3s",
+          background: "radial-gradient(ellipse at top, #0a1628 0%, #000000 60%)",
         }} />
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
