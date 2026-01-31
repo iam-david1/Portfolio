@@ -245,6 +245,7 @@ export default function SalonPage() {
   });
   const [bookingStatus, setBookingStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function loadData() {
     setLoading(true);
@@ -337,12 +338,21 @@ export default function SalonPage() {
           >
             Elite Salon
           </motion.div>
-          <ul className="nav-menu">
+          <button
+            className={`salon-hamburger ${menuOpen ? 'open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <ul className={`nav-menu ${menuOpen ? 'open' : ''}`}>
             {["home", "services", "team", "gallery", "booking", "reviews"].map((item) => (
               <li key={item}>
                 <button
                   className={activeSection === item ? "active" : ""}
-                  onClick={() => scrollToSection(item)}
+                  onClick={() => { scrollToSection(item); setMenuOpen(false); }}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </button>

@@ -248,6 +248,7 @@ export default function HomeCarePage() {
   });
   const [submitStatus, setSubmitStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function loadData() {
     setLoading(true);
@@ -336,12 +337,21 @@ export default function HomeCarePage() {
             <span className="brand-icon">🏥</span>
             CareComfort
           </motion.div>
-          <ul className="hc-nav-menu">
+          <button
+            className={`hc-hamburger ${menuOpen ? 'open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <ul className={`hc-nav-menu ${menuOpen ? 'open' : ''}`}>
             {["home", "services", "caregivers", "about", "contact"].map((item) => (
               <li key={item}>
                 <button
                   className={activeSection === item ? "active" : ""}
-                  onClick={() => scrollToSection(item)}
+                  onClick={() => { scrollToSection(item); setMenuOpen(false); }}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </button>

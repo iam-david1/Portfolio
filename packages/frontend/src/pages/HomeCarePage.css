@@ -940,6 +940,41 @@
   margin-bottom: 1.5rem;
 }
 
+/* Hamburger Menu */
+.hc-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.hc-hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: var(--hc-primary-light);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hc-hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hc-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hc-hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .hc-about-wrapper,
@@ -965,21 +1000,70 @@
 }
 
 @media (max-width: 768px) {
+  .hc-hamburger {
+    display: flex;
+  }
+
   .hc-nav-menu {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100vh;
+    background: rgba(2, 6, 23, 0.98);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .hc-nav-menu.open {
+    left: 0;
+  }
+
+  .hc-nav-menu button {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .hc-nav-container {
+    padding: 1rem;
   }
 
   .hc-hero-content h1 {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+  }
+
+  .hc-hero-content p {
+    font-size: 1rem;
   }
 
   .hc-hero-stats {
     position: relative;
     bottom: auto;
+    left: auto;
     transform: none;
     margin-top: 1.5rem;
-    gap: 0.75rem;
-    padding: 0.4rem 0.8rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    width: 90%;
+  }
+
+  .hc-stat-item {
+    min-width: 60px;
+  }
+
+  .hc-stat-value {
+    font-size: 0.9rem;
+  }
+
+  .hc-stat-label {
+    font-size: 0.5rem;
   }
 
   .hc-services-grid,
@@ -996,23 +1080,60 @@
     grid-template-columns: 1fr;
   }
 
+  .hc-form-container {
+    padding: 1.5rem;
+  }
+
   .hc-footer-content {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 
   .hc-section {
-    padding: 4rem 1rem;
+    padding: 3rem 1rem;
+  }
+
+  .hc-section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .hc-section-header p {
+    font-size: 0.9rem;
   }
 
   .hc-back-button {
     top: auto;
     bottom: 1rem;
     left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .hc-hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 280px;
+    padding: 0.9rem 2rem;
   }
 
   .hc-trust-badges {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .hc-form-group input,
+  .hc-form-group select,
+  .hc-form-group textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  /* Date input placeholder fix */
+  .hc-form-group input[type="date"],
+  .hc-form-group input[type="time"] {
+    color-scheme: dark;
   }
 }
