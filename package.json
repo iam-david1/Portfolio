@@ -8,7 +8,7 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd packages/backend && npm run dev",
     "dev:frontend": "cd packages/frontend && npm run dev",
-    "build": "cd packages/frontend && npm install && npm install vite@6 @vitejs/plugin-react && npm run build",
+    "build": "cd packages/frontend && npm install vite@6 @vitejs/plugin-react react react-dom react-router-dom framer-motion && npx vite build",
     "start": "cd packages/backend && npm run start",
     "migrate": "cd packages/backend && npm run migrate",
     "preview": "cd packages/frontend && npm run preview",
