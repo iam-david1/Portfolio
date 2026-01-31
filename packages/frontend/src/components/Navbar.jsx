@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Navbar({ cartCount, onCartClick }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <nav className="navbar">
       <div className="container">
         <div className="nav-brand">
           <a href="#home">ShopHub</a>
         </div>
-        <ul className="nav-menu">
+        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
+          <span className={`hamburger-line ${menuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger-line ${menuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger-line ${menuOpen ? 'open' : ''}`}></span>
+        </button>
+        <ul className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''}`}>
           <li>
-            <a href="#home">Home</a>
+            <a href="#home" onClick={closeMenu}>Home</a>
           </li>
           <li>
-            <a href="#products">Products</a>
+            <a href="#products" onClick={closeMenu}>Products</a>
           </li>
           <li>
-            <a href="#about">About</a>
+            <a href="#about" onClick={closeMenu}>About</a>
           </li>
           <li>
-            <a href="#contact">Contact</a>
+            <a href="#contact" onClick={closeMenu}>Contact</a>
           </li>
         </ul>
         <div className="nav-actions">
