@@ -825,6 +825,71 @@ body {
   transform: rotate(-45deg) translate(7px, -6px);
 }
 
+/* Homepage Specific Styles */
+.projects-grid-home {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.hero-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #00d4ff, #00ff88);
+  padding: 4px;
+  position: relative;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 50px;
+  color: #00d4ff;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.hero-title-home {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-name-gradient {
+  background: linear-gradient(135deg, #00d4ff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle-home {
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.hero-description {
+  font-size: 1.15rem;
+  color: #a0a0a0;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.hero-social-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hamburger {
@@ -917,5 +982,96 @@ body {
 
   .product-card .price {
     font-size: 1.1rem;
+  }
+
+  /* Homepage Hero Mobile */
+  .hero-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .hero-avatar svg {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title-home {
+    font-size: 1.75rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-subtitle-home {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+    margin: 0 auto 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-social-links {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-social-links a {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.75rem !important;
+    gap: 0.3rem !important;
+  }
+
+  .hero-social-links svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Projects Grid Mobile */
+  .projects-grid-home {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .project-card {
+    max-width: 100%;
+  }
+
+  .project-card h3 {
+    font-size: 1rem;
+  }
+
+  .project-card p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra small screens (under 380px) */
+@media (max-width: 380px) {
+  .hero-title-home {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle-home {
+    font-size: 0.9rem;
+  }
+
+  .hero-social-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-social-links a {
+    width: 80%;
+    justify-content: center;
   }
 }

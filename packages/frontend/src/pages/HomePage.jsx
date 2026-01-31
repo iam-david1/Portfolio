@@ -35,6 +35,7 @@ const projects = [
     link: "/shop",
     color: "#00d4ff",
     icon: "🛒",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
   },
   {
     title: "Elite Salon",
@@ -43,6 +44,7 @@ const projects = [
     link: "/salon",
     color: "#d4af37",
     icon: "💇",
+    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=400&fit=crop",
   },
   {
     title: "CareComfort HomeCare",
@@ -51,6 +53,7 @@ const projects = [
     link: "/homecare",
     color: "#3b82f6",
     icon: "🏥",
+    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=600&h=400&fit=crop",
   },
 ];
 
@@ -94,95 +97,121 @@ function ProjectCard({ project }) {
     <motion.article
       variants={fadeInUp}
       whileHover={{ y: -8, boxShadow: `0 20px 40px ${project.color}20` }}
+      className="project-card"
       style={{
         background: "linear-gradient(135deg, #111111 0%, #0a0a0a 100%)",
-        borderRadius: "20px",
+        borderRadius: "16px",
         border: "1px solid #1f1f1f",
-        padding: "2rem",
         display: "flex",
         flexDirection: "column",
-        gap: "1rem",
         transition: "all 0.3s ease",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      {/* Project Image */}
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "2px",
-          background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
-          opacity: 0.6,
+          position: "relative",
+          width: "100%",
+          height: "180px",
+          overflow: "hidden",
         }}
-      />
-
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <span style={{ fontSize: "2rem" }}>{project.icon}</span>
+      >
+        <img
+          src={project.image}
+          alt={project.title}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            transition: "transform 0.5s ease",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)`,
+          }}
+        />
         <span
           style={{
-            padding: "0.2rem 0.75rem",
+            position: "absolute",
+            top: "0.75rem",
+            right: "0.75rem",
+            padding: "0.3rem 0.8rem",
             borderRadius: "999px",
-            background: `${project.color}15`,
-            border: `1px solid ${project.color}40`,
-            color: project.color,
+            background: `${project.color}`,
+            color: project.color === "#d4af37" ? "#0a0a0a" : "#ffffff",
             fontSize: "0.7rem",
             textTransform: "uppercase",
-            letterSpacing: "0.08em",
+            letterSpacing: "0.05em",
             fontWeight: 600,
           }}
         >
           Full-Stack
         </span>
+        <span
+          style={{
+            position: "absolute",
+            bottom: "0.75rem",
+            left: "0.75rem",
+            fontSize: "2rem",
+          }}
+        >
+          {project.icon}
+        </span>
       </div>
 
-      <h3 style={{ fontSize: "1.35rem", fontWeight: 700 }}>{project.title}</h3>
+      {/* Content */}
+      <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1 }}>
+        <h3 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0 }}>{project.title}</h3>
 
-      <p style={{ color: "#a0a0a0", fontSize: "0.95rem", lineHeight: 1.6, flex: 1 }}>
-        {project.description}
-      </p>
+        <p style={{ color: "#a0a0a0", fontSize: "0.85rem", lineHeight: 1.6, flex: 1, margin: 0 }}>
+          {project.description}
+        </p>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.5rem" }}>
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            style={{
-              padding: "0.3rem 0.7rem",
-              background: "#1a1a1a",
-              borderRadius: "6px",
-              fontSize: "0.75rem",
-              color: "#888",
-              border: "1px solid #2a2a2a",
-            }}
-          >
-            {tag}
-          </span>
-        ))}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              style={{
+                padding: "0.25rem 0.6rem",
+                background: "#1a1a1a",
+                borderRadius: "4px",
+                fontSize: "0.65rem",
+                color: "#888",
+                border: "1px solid #2a2a2a",
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <Link
+          to={project.link}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            padding: "0.75rem 1.25rem",
+            borderRadius: "10px",
+            background: `linear-gradient(135deg, ${project.color}, ${project.color}cc)`,
+            color: project.color === "#d4af37" ? "#0a0a0a" : "#ffffff",
+            fontSize: "0.85rem",
+            fontWeight: 600,
+            textDecoration: "none",
+            marginTop: "auto",
+            transition: "all 0.3s ease",
+          }}
+        >
+          <span>View Project</span>
+          <span>→</span>
+        </Link>
       </div>
-
-      <Link
-        to={project.link}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem",
-          padding: "0.85rem 1.5rem",
-          borderRadius: "12px",
-          background: `linear-gradient(135deg, ${project.color}, ${project.color}cc)`,
-          color: project.color === "#d4af37" ? "#0a0a0a" : "#ffffff",
-          fontSize: "0.9rem",
-          fontWeight: 600,
-          textDecoration: "none",
-          marginTop: "0.5rem",
-          transition: "all 0.3s ease",
-        }}
-      >
-        <span>View Project</span>
-        <span>→</span>
-      </Link>
     </motion.article>
   );
 }
@@ -257,15 +286,7 @@ export default function HomePage() {
           {/* Avatar - Abstract Code Icon */}
           <motion.div
             variants={fadeInUp}
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              margin: "0 auto 2rem",
-              background: "linear-gradient(135deg, #00d4ff, #00ff88)",
-              padding: "4px",
-              position: "relative",
-            }}
+            className="hero-avatar"
           >
             <div
               style={{
@@ -305,65 +326,25 @@ export default function HomePage() {
 
           {/* Name & Title */}
           <motion.div variants={fadeInUp}>
-            <motion.span
-              style={{
-                display: "inline-block",
-                padding: "0.5rem 1.2rem",
-                background: "rgba(0, 212, 255, 0.1)",
-                border: "1px solid rgba(0, 212, 255, 0.3)",
-                borderRadius: "50px",
-                color: "#00d4ff",
-                fontSize: "0.85rem",
-                marginBottom: "1rem",
-                fontWeight: 600,
-              }}
-            >
+            <motion.span className="hero-badge">
               Welcome to my portfolio
             </motion.span>
           </motion.div>
 
-          <motion.h1
-            variants={fadeInUp}
-            style={{
-              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-              fontWeight: 800,
-              marginBottom: "0.5rem",
-              letterSpacing: "-0.02em",
-            }}
-          >
+          <motion.h1 variants={fadeInUp} className="hero-title-home">
             Hi, I'm{" "}
-            <span
-              style={{
-                background: "linear-gradient(135deg, #00d4ff, #00ff88)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
+            <span className="hero-name-gradient">
               David Omwenyeke
             </span>
           </motion.h1>
 
-          <motion.h2
-            variants={fadeInUp}
-            style={{
-              fontSize: "clamp(1.2rem, 3vw, 1.8rem)",
-              fontWeight: 600,
-              color: "#888",
-              marginBottom: "1.5rem",
-            }}
-          >
+          <motion.h2 variants={fadeInUp} className="hero-subtitle-home">
             Full-Stack Developer
           </motion.h2>
 
           <motion.p
             variants={fadeInUp}
-            style={{
-              fontSize: "1.15rem",
-              color: "#a0a0a0",
-              maxWidth: "600px",
-              margin: "0 auto 2rem",
-              lineHeight: 1.7,
-            }}
+            className="hero-description"
           >
             I build modern, responsive web applications with clean code and great user experiences.
             Passionate about creating full-stack solutions that solve real problems.
@@ -372,12 +353,7 @@ export default function HomePage() {
           {/* Social Links */}
           <motion.div
             variants={fadeInUp}
-            style={{
-              display: "flex",
-              gap: "1rem",
-              justifyContent: "center",
-              marginBottom: "2.5rem",
-            }}
+            className="hero-social-links"
           >
             <motion.a
               href="https://github.com/iam-david1"
@@ -608,11 +584,7 @@ export default function HomePage() {
 
           <motion.div
             variants={staggerContainer}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-              gap: "2rem",
-            }}
+            className="projects-grid-home"
           >
             {projects.map((project) => (
               <ProjectCard key={project.title} project={project} />
