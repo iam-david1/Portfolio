@@ -1,4 +1,5 @@
 import express from "express";
+import { body, validationResult } from "express-validator";
 import path from "path";
 import { fileURLToPath } from "url";
 import sqlite3 from "sqlite3";
@@ -94,50 +95,71 @@ router.get("/testimonials", (req, res) => {
 });
 
 // Submit a testimonial
-router.post("/testimonials", (req, res) => {
-  const { name, relation, rating, comment, image } = req.body;
+router.post(
+  "/testimonials",
+  [
+    body("name").trim().notEmpty().withMessage("Name is required").isLength({ max: 100 }).withMessage("Name must be under 100 characters"),
+    body("relation").optional().trim().isLength({ max: 100 }).withMessage("Relation must be under 100 characters"),
+    body("rating").isInt({ min: 1, max: 5 }).withMessage("Rating must be between 1 and 5"),
+    body("comment").trim().notEmpty().withMessage("Comment is required").isLength({ max: 1000 }).withMessage("Comment must be under 1000 characters"),
+    body("image").optional().trim().isURL().withMessage("Image must be a valid URL"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!name || !rating || !comment) {
-    return res.status(400).json({ error: "Name, rating, and comment are required" });
+    const { name, relation, rating, comment, image } = req.body;
+    const db = getDb();
+    const sql = "INSERT INTO homecare_testimonials (name, relation, rating, comment, image) VALUES (?, ?, ?, ?, ?)";
+
+    db.run(sql, [name, relation || null, rating, comment, image || null], function(err) {
+      db.close();
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ id: this.lastID, message: "Testimonial submitted successfully" });
+    });
   }
-
-  const db = getDb();
-  const sql = "INSERT INTO homecare_testimonials (name, relation, rating, comment, image) VALUES (?, ?, ?, ?, ?)";
-
-  db.run(sql, [name, relation || null, rating, comment, image || null], function(err) {
-    db.close();
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id: this.lastID, message: "Testimonial submitted successfully" });
-  });
-});
+);
 
 // =============================================
 // CONSULTATIONS
 // =============================================
 
 // Request a consultation
-router.post("/consultations", (req, res) => {
-  const { name, email, phone, service_id, message, preferred_date } = req.body;
+router.post(
+  "/consultations",
+  [
+    body("name").trim().notEmpty().withMessage("Name is required").isLength({ max: 100 }).withMessage("Name must be under 100 characters"),
+    body("email").trim().isEmail().withMessage("Valid email is required"),
+    body("phone").trim().notEmpty().withMessage("Phone is required").matches(/^[0-9+\-\s()]+$/).withMessage("Invalid phone format"),
+    body("service_id").optional().isInt().withMessage("Service ID must be a number"),
+    body("message").optional().trim().isLength({ max: 1000 }).withMessage("Message must be under 1000 characters"),
+    body("preferred_date").optional().trim().isDate().withMessage("Invalid date format"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!name || !email || !phone) {
-    return res.status(400).json({ error: "Name, email, and phone are required" });
-  }
+    const { name, email, phone, service_id, message, preferred_date } = req.body;
+    const db = getDb();
+    const sql = `
+      INSERT INTO homecare_consultations (name, email, phone, service_id, message, preferred_date)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
 
-  const db = getDb();
-  const sql = `
-    INSERT INTO homecare_consultations (name, email, phone, service_id, message, preferred_date)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `;
-
-  db.run(sql, [name, email, phone, service_id || null, message || null, preferred_date || null], function(err) {
-    db.close();
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({
-      id: this.lastID,
-      message: "Consultation request received! Our care coordinator will contact you within 24 hours."
+    db.run(sql, [name, email, phone, service_id || null, message || null, preferred_date || null], function(err) {
+      db.close();
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({
+        id: this.lastID,
+        message: "Consultation request received! Our care coordinator will contact you within 24 hours."
+      });
     });
-  });
-});
+  }
+);
 
 // Get consultation by ID
 router.get("/consultations/:id", (req, res) => {

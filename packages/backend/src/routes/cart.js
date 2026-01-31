@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { body, validationResult } from "express-validator";
 import path from "path";
 import { fileURLToPath } from "url";
 import sqlite3 from "sqlite3";
@@ -15,29 +16,36 @@ function getDb() {
 const router = Router();
 
 // Create a new cart for a session
-router.post("/", (req, res, next) => {
-  const { sessionId } = req.body;
-  if (!sessionId) {
-    return res.status(400).json({ error: "sessionId is required" });
-  }
-
-  const db = getDb();
-  const now = new Date().toISOString();
-
-  db.run(
-    `
-      INSERT INTO carts (session_id, created_at, updated_at)
-      VALUES (?, ?, ?)
-      ON CONFLICT(session_id) DO UPDATE SET updated_at = excluded.updated_at
-    `,
-    [sessionId, now, now],
-    function (err) {
-      db.close();
-      if (err) return next(err);
-      res.status(201).json({ sessionId });
+router.post(
+  "/",
+  [
+    body("sessionId").trim().notEmpty().withMessage("sessionId is required").isLength({ max: 100 }).withMessage("sessionId must be under 100 characters"),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-  );
-});
+
+    const { sessionId } = req.body;
+    const db = getDb();
+    const now = new Date().toISOString();
+
+    db.run(
+      `
+        INSERT INTO carts (session_id, created_at, updated_at)
+        VALUES (?, ?, ?)
+        ON CONFLICT(session_id) DO UPDATE SET updated_at = excluded.updated_at
+      `,
+      [sessionId, now, now],
+      function (err) {
+        db.close();
+        if (err) return next(err);
+        res.status(201).json({ sessionId });
+      }
+    );
+  }
+);
 
 // Get cart items for a session
 router.get("/:sessionId", (req, res, next) => {
@@ -62,15 +70,21 @@ router.get("/:sessionId", (req, res, next) => {
 });
 
 // Add item to cart
-router.post("/:sessionId/items", (req, res, next) => {
-  const { sessionId } = req.params;
-  const { productId, quantity = 1 } = req.body;
+router.post(
+  "/:sessionId/items",
+  [
+    body("productId").isInt({ min: 1 }).withMessage("productId must be a positive integer"),
+    body("quantity").optional().isInt({ min: 1, max: 100 }).withMessage("quantity must be between 1 and 100"),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!productId) {
-    return res.status(400).json({ error: "productId is required" });
-  }
-
-  const db = getDb();
+    const { sessionId } = req.params;
+    const { productId, quantity = 1 } = req.body;
+    const db = getDb();
 
   db.serialize(() => {
     db.get("SELECT id FROM carts WHERE session_id = ?", [sessionId], (err, cart) => {
@@ -134,37 +148,44 @@ router.post("/:sessionId/items", (req, res, next) => {
       });
     });
   });
-});
+  }
+);
 
 // Update cart item quantity
-router.put("/:sessionId/items/:itemId", (req, res, next) => {
-  const { itemId } = req.params;
-  const { quantity } = req.body;
+router.put(
+  "/:sessionId/items/:itemId",
+  [
+    body("quantity").isInt().withMessage("quantity must be a number"),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (typeof quantity !== "number") {
-    return res.status(400).json({ error: "quantity must be a number" });
-  }
+    const { itemId } = req.params;
+    const { quantity } = req.body;
+    const db = getDb();
 
-  const db = getDb();
-
-  if (quantity <= 0) {
-    db.run("DELETE FROM cart_items WHERE id = ?", [itemId], function (err) {
-      db.close();
-      if (err) return next(err);
-      return res.status(204).send();
-    });
-  } else {
-    db.run(
-      "UPDATE cart_items SET quantity = ? WHERE id = ?",
-      [quantity, itemId],
-      function (err) {
+    if (quantity <= 0) {
+      db.run("DELETE FROM cart_items WHERE id = ?", [itemId], function (err) {
         db.close();
         if (err) return next(err);
-        res.status(200).json({ cartItemId: itemId, quantity });
-      }
-    );
+        return res.status(204).send();
+      });
+    } else {
+      db.run(
+        "UPDATE cart_items SET quantity = ? WHERE id = ?",
+        [quantity, itemId],
+        function (err) {
+          db.close();
+          if (err) return next(err);
+          res.status(200).json({ cartItemId: itemId, quantity });
+        }
+      );
+    }
   }
-});
+);
 
 // Remove item from cart
 router.delete("/:sessionId/items/:itemId", (req, res, next) => {

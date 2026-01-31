@@ -81,12 +81,12 @@ router.post("/", (req, res, next) => {
               return next(finalizeErr);
             }
 
+            const placeholders = items.map(() => "?").join(",");
+            const ids = items.map((i) => i.cart_item_id);
+
             db.run(
-              `
-                DELETE FROM cart_items
-                WHERE id IN (${items.map((i) => i.cart_item_id).join(",")})
-              `,
-              [],
+              `DELETE FROM cart_items WHERE id IN (${placeholders})`,
+              ids,
               (deleteErr) => {
                 db.close();
                 if (deleteErr) return next(deleteErr);

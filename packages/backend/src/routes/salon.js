@@ -1,4 +1,5 @@
 import express from "express";
+import { body, validationResult } from "express-validator";
 import path from "path";
 import { fileURLToPath } from "url";
 import sqlite3 from "sqlite3";
@@ -111,50 +112,72 @@ router.get("/reviews", (req, res) => {
 });
 
 // Submit a review
-router.post("/reviews", (req, res) => {
-  const { name, rating, comment, image } = req.body;
+router.post(
+  "/reviews",
+  [
+    body("name").trim().notEmpty().withMessage("Name is required").isLength({ max: 100 }).withMessage("Name must be under 100 characters"),
+    body("rating").isInt({ min: 1, max: 5 }).withMessage("Rating must be between 1 and 5"),
+    body("comment").optional().trim().isLength({ max: 1000 }).withMessage("Comment must be under 1000 characters"),
+    body("image").optional().trim().isURL().withMessage("Image must be a valid URL"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!name || !rating) {
-    return res.status(400).json({ error: "Name and rating are required" });
+    const { name, rating, comment, image } = req.body;
+    const db = getDb();
+    const sql = "INSERT INTO salon_reviews (name, rating, comment, image) VALUES (?, ?, ?, ?)";
+
+    db.run(sql, [name, rating, comment || null, image || null], function(err) {
+      db.close();
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ id: this.lastID, message: "Review submitted successfully" });
+    });
   }
-
-  const db = getDb();
-  const sql = "INSERT INTO salon_reviews (name, rating, comment, image) VALUES (?, ?, ?, ?)";
-
-  db.run(sql, [name, rating, comment, image || null], function(err) {
-    db.close();
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id: this.lastID, message: "Review submitted successfully" });
-  });
-});
+);
 
 // =============================================
 // BOOKINGS
 // =============================================
 
 // Create a booking
-router.post("/bookings", (req, res) => {
-  const { name, email, phone, service_id, stylist_id, date, time, notes } = req.body;
+router.post(
+  "/bookings",
+  [
+    body("name").trim().notEmpty().withMessage("Name is required").isLength({ max: 100 }).withMessage("Name must be under 100 characters"),
+    body("email").trim().isEmail().withMessage("Valid email is required"),
+    body("phone").trim().notEmpty().withMessage("Phone is required").matches(/^[0-9+\-\s()]+$/).withMessage("Invalid phone format"),
+    body("service_id").optional().isInt().withMessage("Service ID must be a number"),
+    body("stylist_id").optional().isInt().withMessage("Stylist ID must be a number"),
+    body("date").trim().notEmpty().withMessage("Date is required").isDate().withMessage("Invalid date format"),
+    body("time").trim().notEmpty().withMessage("Time is required").matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be in HH:MM format"),
+    body("notes").optional().trim().isLength({ max: 500 }).withMessage("Notes must be under 500 characters"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!name || !email || !phone || !date || !time) {
-    return res.status(400).json({ error: "Name, email, phone, date, and time are required" });
-  }
+    const { name, email, phone, service_id, stylist_id, date, time, notes } = req.body;
+    const db = getDb();
+    const sql = `
+      INSERT INTO salon_bookings (name, email, phone, service_id, stylist_id, date, time, notes)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
-  const db = getDb();
-  const sql = `
-    INSERT INTO salon_bookings (name, email, phone, service_id, stylist_id, date, time, notes)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  db.run(sql, [name, email, phone, service_id || null, stylist_id || null, date, time, notes || null], function(err) {
-    db.close();
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({
-      id: this.lastID,
-      message: "Booking created successfully! We will contact you shortly to confirm."
+    db.run(sql, [name, email, phone, service_id || null, stylist_id || null, date, time, notes || null], function(err) {
+      db.close();
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({
+        id: this.lastID,
+        message: "Booking created successfully! We will contact you shortly to confirm."
+      });
     });
-  });
-});
+  }
+);
 
 // Get booking by ID (for confirmation)
 router.get("/bookings/:id", (req, res) => {
