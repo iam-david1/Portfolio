@@ -1047,24 +1047,43 @@
     left: auto;
     transform: none;
     margin-top: 1.5rem;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    padding: 0;
+    width: 85%;
+    max-width: 320px;
+    background: rgba(10, 10, 10, 0.9);
+    border-radius: 16px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    overflow: hidden;
   }
 
   .stat-item {
-    min-width: 60px;
+    padding: 0.75rem 0.5rem;
+    border-right: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .stat-item:nth-child(2),
+  .stat-item:nth-child(4) {
+    border-right: none;
+  }
+
+  .stat-item:nth-child(3),
+  .stat-item:nth-child(4) {
+    border-bottom: none;
   }
 
   .stat-value {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.15rem;
   }
 
   .stat-label {
-    font-size: 0.5rem;
+    font-size: 0.6rem;
+    line-height: 1.2;
   }
 
   .services-grid,

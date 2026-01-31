@@ -520,19 +520,13 @@ export default function HomePage() {
             <h2 style={{ fontSize: "2.5rem", fontWeight: 700 }}>What I Work With</h2>
           </motion.div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "3rem",
-            }}
-          >
-            <div>
+          <div className="skills-grid-home">
+            <div className="skills-column">
               {skills.slice(0, 4).map((skill, i) => (
                 <SkillBar key={skill.name} skill={skill} index={i} />
               ))}
             </div>
-            <div>
+            <div className="skills-column">
               {skills.slice(4).map((skill, i) => (
                 <SkillBar key={skill.name} skill={skill} index={i + 4} />
               ))}
