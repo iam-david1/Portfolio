@@ -1,171 +1,58 @@
 # David Omwenyeke - Portfolio
 
-A personal portfolio showcasing **three full-stack web applications** built with React, Node.js, and SQLite.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-00d4ff?style=for-the-badge)](https://david-omwenyeke-portfolio.vercel.app)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://react.dev)
-[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)](https://nodejs.org)
-[![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=flat-square&logo=sqlite)](https://sqlite.org)
+A full-stack portfolio featuring three web applications built with React, Node.js, and SQLite.
 
----
+## Live Demo
 
-## 🔗 Live Demo
+**https://david-omwenyeke-portfolio.vercel.app**
 
-**[View Live Demo](https://david-omwenyeke-portfolio.vercel.app)**
+## Projects
 
----
+| Project | Description |
+|---------|-------------|
+| **Portfolio** | Personal landing page with skills and social links |
+| **ShopHub** | E-commerce store with cart and checkout |
+| **Elite Salon** | Salon booking with team profiles and gallery |
+| **CareComfort** | Healthcare agency with caregiver profiles |
 
-## 📸 Screenshots
+## Tech Stack
 
-### Home Page
-![Home Page](screenshots/home.png)
+**Frontend:** React 18, Vite, React Router, Framer Motion, CSS3
 
-### ShopHub E-Commerce
-![ShopHub](screenshots/shophub.png)
+**Backend:** Node.js, Express.js, SQLite3
 
-### Elite Salon
-![Salon](screenshots/salon.png)
+**Deployment:** Vercel
 
-### CareComfort HomeCare
-![HomeCare](screenshots/homecare.png)
+## Features
 
----
-
-## 📁 What's Inside
-
-```
-Portfolio/
-│
-├── packages/
-│   │
-│   ├── frontend/                # React Application (Vite)
-│   │   ├── src/
-│   │   │   ├── pages/
-│   │   │   │   ├── HomePage.jsx       # Personal portfolio landing page
-│   │   │   │   ├── ShopHubPage.jsx    # E-commerce store
-│   │   │   │   ├── SalonPage.jsx      # Salon booking site
-│   │   │   │   └── HomeCarePage.jsx   # Healthcare agency site
-│   │   │   │
-│   │   │   ├── components/            # Reusable UI components
-│   │   │   ├── mockData.js            # Demo data (no backend needed)
-│   │   │   ├── api.js                 # API client for backend
-│   │   │   └── styles.css             # Global styles
-│   │   │
-│   │   └── package.json
-│   │
-│   └── backend/                 # Express.js API Server
-│       ├── src/
-│       │   ├── server.js              # Express app entry point
-│       │   ├── routes/                # API endpoints
-│       │   ├── models/                # Database queries
-│       │   └── db/
-│       │       ├── schema.sql         # Database tables
-│       │       └── init.js            # Seed data
-│       │
-│       └── package.json
-│
-├── screenshots/                 # README images
-├── pnpm-workspace.yaml          # Monorepo config
-└── package.json                 # Root scripts
-```
-
----
-
-## 🚀 The Projects
-
-| Project | Route | Description |
-|---------|-------|-------------|
-| **Portfolio Home** | `/` | Personal intro, skills, social links |
-| **ShopHub** | `/shop` | E-commerce with cart, checkout, product catalog |
-| **Elite Salon** | `/salon` | Booking system, team profiles, gallery, reviews |
-| **CareComfort** | `/homecare` | Caregiver profiles, services, consultation form |
-
-### Features in Each App
-
-- Responsive design (mobile-friendly)
-- Smooth animations (Framer Motion)
-- Loading skeletons
+- Responsive mobile-first design
+- Smooth animations
 - Form validation
-- Demo mode with mock data
+- Loading skeletons
+- Security (helmet, rate limiting, input validation)
 
----
-
-## 🛠 Installation
-
-### Prerequisites
-
-- **Node.js** 18 or higher
-- **pnpm** (install with `npm install -g pnpm`)
-
-### Steps
+## Run Locally
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/iam-david1/Portfolio.git
-
-# 2. Navigate to the folder
 cd Portfolio
-
-# 3. Install dependencies
 pnpm install
-
-# 4. Start the development server
 pnpm run dev
 ```
 
-### That's it! Open your browser:
+Open http://localhost:5173
 
-| Service | URL |
-|---------|-----|
-| **Frontend** | http://localhost:5173 |
-| **Backend API** | http://localhost:4000 |
-
----
-
-## 📦 Tech Stack
-
-| Layer | Technologies |
-|-------|--------------|
-| **Frontend** | React 18, Vite, React Router, Framer Motion |
-| **Backend** | Node.js, Express.js, SQLite3 |
-| **Styling** | CSS3 (no frameworks) |
-| **Tools** | pnpm workspaces, Git |
-
----
-
-## 🎭 Demo Mode vs Full-Stack Mode
-
-The frontend currently runs in **Demo Mode**:
-
-| Mode | How it works |
-|------|--------------|
-| **Demo Mode** ✓ | Uses `mockData.js` - no backend needed. Forms show demo messages. |
-| **Full-Stack Mode** | Connects to Express API + SQLite. Forms actually save to database. |
-
-To switch to full-stack mode, update the page components to use `api.js` instead of `mockData.js`.
-
----
-
-## 📜 Available Scripts
-
-Run from the root folder:
-
-```bash
-pnpm run dev        # Start frontend + backend
-pnpm run build      # Build frontend for production
-pnpm run migrate    # Initialize/reset database
-```
-
----
-
-## 👤 Contact
+## Contact
 
 **David Omwenyeke** — Full-Stack Developer
 
-- 🐙 GitHub: [@iam-david1](https://github.com/iam-david1)
-- 💼 LinkedIn: [david-omwenyeke](https://www.linkedin.com/in/david-omwenyeke-4054b038a/)
+[![GitHub](https://img.shields.io/badge/GitHub-iam--david1-181717?style=flat-square&logo=github)](https://github.com/iam-david1)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-david--omwenyeke-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/david-omwenyeke-4054b038a/)
 
----
+## License
 
-## 📄 License
-
-MIT License — feel free to use as inspiration for your own portfolio.
+MIT
