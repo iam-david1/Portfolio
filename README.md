@@ -10,7 +10,7 @@ A personal portfolio showcasing **three full-stack web applications** built with
 
 ## 🔗 Live Demo
 
-**[View Live Demo](#)** *(Coming soon)*
+**[View Live Demo](https://david-omwenyeke-portfolio.vercel.app)**
 
 ---
 
