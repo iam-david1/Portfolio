@@ -119,6 +119,7 @@ export const mockHomecareTestimonials = [
   { id: 1, name: "Margaret Thompson", relation: "Client", rating: 5, comment: "CareComfort has been a blessing for our family. Sarah takes such wonderful care of my mother.", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" },
   { id: 2, name: "David Miller", relation: "Son of Client", rating: 5, comment: "After my father's surgery, the team at CareComfort made his recovery smooth and stress-free.", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" },
   { id: 3, name: "Linda Garcia", relation: "Daughter of Client", rating: 5, comment: "The companionship care for my mom has been incredible. Maria brings so much joy to her days.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" },
+  { id: 4, name: "Robert Chen", relation: "Spouse of Client", rating: 4, comment: "Professional, compassionate, and reliable. CareComfort helped us navigate a difficult time with grace and expertise.", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop" },
 ];
 
 export const mockHomecareStats = {
