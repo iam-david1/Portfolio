@@ -425,8 +425,8 @@ export default function HomePage() {
               Contact Me
             </motion.a>
             <motion.a
-              href="/resume.html"
-              target="_blank"
+              href="/resume.pdf"
+              download="David_Omwenyeke_Resume.pdf"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
               style={{
