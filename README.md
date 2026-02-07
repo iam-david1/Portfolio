@@ -6,7 +6,7 @@
 
 <br />
 
-[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-00d4ff?style=for-the-badge&logo=vercel&logoColor=white)](https://david-omwenyeke-portfolio.vercel.app)
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-00d4ff?style=for-the-badge&logo=vercel&logoColor=white)](https://davidomwenyeke.com)
 [![GitHub Repo](https://img.shields.io/badge/SOURCE_CODE-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/iam-david1/Portfolio)
 
 <br />
