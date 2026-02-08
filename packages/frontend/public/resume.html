@@ -178,6 +178,50 @@
         display: none;
       }
     }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .title {
+        font-size: 1rem;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+      }
+
+      .contact-info span:nth-child(even) {
+        display: none;
+      }
+
+      h2 {
+        font-size: 1.1rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-header {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .print-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px 18px;
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body>
