@@ -426,7 +426,8 @@ export default function HomePage() {
             </motion.a>
             <motion.a
               href="/resume.pdf"
-              download="David_Omwenyeke_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
               style={{
