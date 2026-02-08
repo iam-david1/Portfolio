@@ -425,7 +425,7 @@ export default function HomePage() {
               Contact Me
             </motion.a>
             <motion.a
-              href="/resume.pdf"
+              href="/resume.html"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, y: -3 }}
