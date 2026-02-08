@@ -11,7 +11,7 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    html {
       height: 100%;
     }
 
@@ -23,13 +23,36 @@
       margin: 0 auto;
       padding: 40px;
       background: #fff;
-      min-height: 100vh;
-      min-height: 100dvh;
+      min-height: 100%;
+    }
+
+    .download-bar {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #00d4ff, #00ff88);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .download-btn:active {
+      opacity: 0.8;
     }
 
     @media print {
-      body {
-        padding: 20px;
+      .download-bar {
+        display: none;
       }
     }
 
@@ -74,7 +97,6 @@
     section {
       margin-bottom: 25px;
     }
-
 
     h2 {
       font-size: 1.3rem;
@@ -166,30 +188,21 @@
       color: #555;
     }
 
-    .print-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 24px;
-      background: linear-gradient(135deg, #00d4ff, #00ff88);
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    @media print {
-      .print-btn {
-        display: none;
-      }
-    }
-
     @media (max-width: 600px) {
       body {
         padding: 15px;
         max-width: 100%;
+      }
+
+      .download-bar {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .download-btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 1.1rem;
       }
 
       h1 {
@@ -222,17 +235,14 @@
         flex-direction: column;
         gap: 2px;
       }
-
-      .print-btn {
-        bottom: 10px;
-        right: 10px;
-        padding: 10px 18px;
-        font-size: 0.85rem;
-      }
     }
   </style>
 </head>
 <body>
+  <div class="download-bar">
+    <a href="/resume.pdf" class="download-btn" target="_blank" rel="noopener noreferrer">Download PDF</a>
+  </div>
+
   <header>
     <h1>David Omwenyeke</h1>
     <div class="title">Full-Stack Developer</div>
@@ -324,7 +334,5 @@
       <p>Completed extensive online coursework and hands-on projects in web development, focusing on modern JavaScript frameworks and full-stack technologies.</p>
     </div>
   </section>
-
-  <button class="print-btn" onclick="window.print()">Download PDF</button>
 </body>
 </html>
