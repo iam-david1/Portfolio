@@ -846,7 +846,7 @@ export default function SalonPage() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Elite Salon. All rights reserved. | Part of the Portfolio Monorepo</p>
+            <p>&copy; {new Date().getFullYear()} Elite Salon. All rights reserved. | Part of the Portfolio Monorepo</p>
           </div>
         </div>
       </footer>
