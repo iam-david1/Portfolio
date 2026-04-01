@@ -784,7 +784,7 @@ export default function HomeCarePage() {
             </div>
           </div>
           <div className="hc-footer-bottom">
-            <p>&copy; 2024 CareComfort. All rights reserved. Licensed Home Care Agency. | Part of the Portfolio Monorepo</p>
+            <p>&copy; {new Date().getFullYear()} CareComfort. All rights reserved. Licensed Home Care Agency. | Part of the Portfolio Monorepo</p>
           </div>
         </div>
       </footer>

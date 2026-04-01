@@ -928,7 +928,7 @@ function Footer() {
             ShopHub
           </span>
         </motion.div>
-        <p>&copy; 2024 ShopHub. All rights reserved. | Premium Tech Store</p>
+        <p>&copy; {new Date().getFullYear()} ShopHub. All rights reserved. | Premium Tech Store</p>
       </div>
     </motion.footer>
   );
