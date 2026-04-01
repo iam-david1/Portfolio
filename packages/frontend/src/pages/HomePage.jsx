@@ -636,7 +636,7 @@ export default function HomePage() {
             </a>
           </div>
           <p style={{ color: "#444", fontSize: "0.85rem", marginTop: "2rem" }}>
-            © 2024 David Omwenyeke. All rights reserved.
+            © {new Date().getFullYear()} David Omwenyeke. All rights reserved.
           </p>
         </motion.div>
       </footer>
